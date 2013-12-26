@@ -1,0 +1,37 @@
+<html>
+	<head>
+		<title>Day 1</title>
+	</head>
+	<body backgroud = "#000000">
+		<canvas id = "canvas"></canvas>
+		<script>
+
+			function init()
+			{
+				var canvas = document.getElementById("canvas");
+				var ctx = canvas.getContext("2d");
+
+				var w = window.innerWidth;
+				var h = window.innerHeight;
+				canvas.width = W;
+				canvas.height = H;
+
+				var particles_count = 100;
+				var particles = [];
+
+				for( i = 0; i < particles_count)
+				{
+					particles.push({
+						x:Math.random()*w,
+						y:Math.random()*h,
+						r:Math.random()*10 + 1
+					})
+					console.log(particles[i]);
+				}
+			}
+			
+
+		</script>
+	</body>
+</html>
+
