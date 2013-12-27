@@ -1,0 +1,70 @@
+<html>
+	<head>
+		<title>Day 1</title>
+	</head>
+	<body style = "background:#000000">
+		<canvas id = "canvas"></canvas>
+		<script>
+			
+			var canvas = document.getElementById("canvas");
+			var ctx = canvas.getContext("2d");
+
+			var w = window.innerWidth;
+			var h = window.innerHeight;
+			canvas.width = w;
+			canvas.height = h;
+
+			var particles_count = 300;
+			var particles = [];
+
+			for( i = 0; i < particles_count; i++)
+			{
+				particles.push({
+					x:Math.random()*w,
+					y:Math.random()*h,
+					r:Math.random()*5 + 1,
+				});
+				// console.log(particles[i]);
+			}
+
+			function draw()
+			{
+				ctx.clearRect(0,0,w,h);
+
+				ctx.fillStyle = "rgba(255,255,255,1)";
+				ctx.beginPath();
+				for( i = 0; i < particles_count; i++)
+				{
+					var p = particles[i];
+					ctx.moveTo(p.x,p.y);
+					ctx.arc(p.x, p.y, p.r, 0, 2*Math.PI, true);
+				}
+				ctx.fill();
+				update();
+			}
+
+			function update()
+			{
+				for( i = 0; i < particles_count; i++)
+				{
+					var p = particles[i];
+					p.x +=  Math.random() + 1;	
+					p.y += p.r * 0.5;
+					if (p.y > h)
+					{
+						p.y = 0;
+						p.x = Math.random()*w;
+					}
+					if (p.x > w)
+					{
+						p.y = Math.random()*h;
+						p.x = 0;
+					}
+				}
+			}
+			
+			setInterval(draw, 30);
+		</script>
+	</body>
+</html>
+

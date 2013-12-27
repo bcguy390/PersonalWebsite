@@ -1,0 +1,139 @@
+<html>
+	<head>
+		<title>Day 2</title>
+		<script src = "http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+	</head>
+	<body style = "background:'white'">
+
+		<input id = "slider" style = "position:absolute" type="range"  min="0" max="100" />
+		<canvas id = "canvas"></canvas>
+		<script>
+			
+			var canvas = document.getElementById("canvas");
+			var ctx = canvas.getContext("2d");
+
+			var w = window.innerWidth;
+			var h = window.innerHeight;
+			canvas.width = w;
+			canvas.height = h;
+
+			var color = -1;
+			var down = 0;
+			var mouseX = 0;
+			var mouseY = 0;
+
+			var circles = [];
+			function init(){
+				ctx.fillStyle = '#'+Math.floor(Math.random()*16777215).toString(16);
+				ctx.beginPath();
+				ctx.arc(60, h/5, 40, Math.PI*2, false);
+				ctx.closePath();
+				ctx.fill();
+				circles.push({
+					color: ctx.fillStyle,
+					x: 60,
+					y: 1*h/5,
+					radius: 40,
+					button: 1
+				});
+				ctx.fillStyle = '#'+Math.floor(Math.random()*16777215).toString(16);
+				ctx.beginPath();
+				ctx.arc(60, 2*h/5, 40, Math.PI*2, false);
+				ctx.closePath();
+				ctx.fill();
+				circles.push({
+					color: ctx.fillStyle,
+					x: 60,
+					y: 2*h/5,
+					radius: 40,
+					button: 1
+				});
+				ctx.fillStyle = '#'+Math.floor(Math.random()*16777215).toString(16);
+				ctx.beginPath();
+				ctx.arc(60, 3*h/5, 40, Math.PI*2, false);
+				ctx.closePath();
+				ctx.fill();
+				circles.push({
+					color: ctx.fillStyle,
+					x: 60,
+					y: 3*h/5,
+					radius: 40,
+					button: 1
+				});
+				ctx.fillStyle = '#'+Math.floor(Math.random()*16777215).toString(16);
+				ctx.beginPath();
+				ctx.arc(60, 4*h/5, 40, Math.PI*2, false);
+				ctx.closePath();
+				ctx.fill();
+				circles.push({
+					color: ctx.fillStyle,
+					x: 60,
+					y: 4*h/5,
+					radius: 40,
+					button: 1
+				});
+
+				ctx.fillStyle = "black";
+				ctx.beginPath();
+				ctx.moveTo(140, 0);
+				ctx.lineTo(140,h);	
+				ctx.closePath();
+				ctx.stroke();
+			}
+			$("#canvas").mousedown(function(e){
+				down = 1;
+				if (down && mouseX > 160 && color != -1)
+				{
+					ctx.fillStyle = color
+					ctx.beginPath();
+					ctx.arc(mouseX, mouseY, document.getElementById("slider").value, Math.PI*2, false);
+					ctx.closePath();
+					ctx.fill();
+					ctx.font="50px sans-serif";
+					ctx.fillStyle="black";
+					ctx.lineWidth = 1;
+	        		ctx.fillText("Click on a circle and draw!", 500, 40);
+				}
+				for( i = 0; i < circles.length; i++)
+				{
+					if(mouseX > 20 && mouseX < 100)
+					{
+						if(mouseY > (circles[i].y - circles[i].radius) && mouseY < (circles[i].y + circles[i].radius))
+						{
+							color = circles[i].color;
+						}
+					}
+				}
+
+	        });
+	        $("#canvas").mousemove(function(e) {
+			    mouseX = e.pageX;
+			    mouseY = e.pageY;
+			    console.log(mouseX, mouseY, color);	
+			    if (down && mouseX > 180 && color != -1)
+				{
+					ctx.fillStyle = color
+					ctx.beginPath();
+					ctx.arc(mouseX, mouseY, document.getElementById("slider").value, Math.PI*2, false);
+					ctx.closePath();
+					ctx.fill();
+					ctx.font="50px sans-serif";
+					ctx.fillStyle="black";
+					ctx.lineWidth = 1;
+		        	ctx.fillText("Click on a circle and draw!", 500, 40);
+				}
+			}).mouseover();
+			$("#canvas").mouseup(function(e){
+				down = 0;
+
+	        });
+
+	        init();
+	        ctx.font="15px sans-serif";
+	        ctx.fillText("Radius of circles", 12, 30);
+	        ctx.font="50px sans-serif";
+	        ctx.fillText("Click on a circle and draw!", 500, 40);
+		</script>
+	</body>
+</html>
+
