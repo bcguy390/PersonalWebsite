@@ -1,0 +1,137 @@
+<html>
+	<head>
+		<title>Day 3</title>
+		<script src = "http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+	</head>
+	<body style = "background:'white'">
+		<canvas id = "canvas" style = "background: black" ></canvas>
+		<script>
+			
+			var canvas = document.getElementById("canvas");
+			var ctx = canvas.getContext("2d");
+
+			var w = 600;
+			var h = 400;
+			canvas.width = w;
+			canvas.height = h ;
+
+			// var objects = [];
+			var rect = {
+					x:5,
+					y:0,
+					h:50,
+					w:10,
+					v:30,
+					c:"Green"
+				};
+			var ball = {
+					x:w/2,
+					y:h/2,
+					r:10,
+					x_v:5,
+					y_v:5,
+					c:"Red"
+				};
+			function init()
+			{
+				ctx.beginPath();
+				ctx.fillStyle = rect.c;
+				ctx.fillRect(rect.x,rect.y,rect.w,rect.h);
+				ctx.closePath();
+				ctx.beginPath();
+				ctx.fillStyle = ball.c;
+				ctx.arc(ball.x,ball.y,ball.r, 0,Math.PI*2, false);
+				ctx.closePath();
+				ctx.fill();
+				// ctx.rect(w-10,0,10,50);
+				// ctx.stroke();
+			}
+			$(document).keydown(function(event){
+				moveBody(event);
+				console.log(event.keyCode);
+			});
+			// $(document).keyup(function(event){
+			// 	buttonpress = 0;
+			// 	direction = 0;
+			// });
+			function drawBall()
+			{
+				console.log(ball)
+				// if(ball.x + ball.x_v > w)
+				// {
+				// 	ball.x_v = ball.x_v*-1;
+				// }
+				// else if(ball.x - ball.x_v < 0)
+				// {
+				// 	ball.x_v = ball.x_v*-1;
+				// }
+				// else if(ball.y + ball.y_v > h)
+				// {
+				// 	ball.y_v = ball.y_v*-1;
+				// }
+				// else if(ball.y - ball.y_v < 0)
+				// {
+				// 	ball.y_v = ball.y_v*-1;
+				// }
+				console.log((ball.x + ball.x_v) > w, ball.x, ball.x_v, w)
+				if((ball.x + ball.x_v) < (rect.x+ rect.w))
+				{
+					ctx.fillStyle="black";
+					ctx.clearRect(ball.x-ball.r,ball.y-ball.r,2*ball.r,2*ball.r);
+					ball.x = w/2;
+					ball.y = w/2;
+					ball.x_v = 10;
+					ball.y_v = 10;
+				}
+				if((ball.x + ball.x_v) >= w || (((ball.x + ball.x_v) < (rect.x+ rect.w)) &&(ball_y < (rect.y+rect.h) && (ball_y > rect.y))))
+					ball.x_v = -ball.x_v;
+				if((ball.y + ball.y_v) >= h || (ball.y + ball.y_v) < 0)
+					ball.y_v = -ball.y_v;
+				ctx.fillStyle="black";
+				ctx.clearRect(ball.x-ball.r,ball.y-ball.r,2*ball.r,2*ball.r);
+				ball.x += ball.x_v;
+				ball.y += ball.y_v;
+				ctx.beginPath();
+				ctx.fillStyle = ball.c;
+				ctx.arc(ball.x,ball.y,ball.r, 0,Math.PI*2, false);
+				ctx.closePath();
+				ctx.fill();
+			}
+			function moveBody(e)
+			{
+				// console.log("HERE", e.keyCode);
+				switch(e.keyCode)
+				{
+					case 38:   //up
+						if(rect.y - rect.v >= 0)
+						{
+							ctx.fillStyle="black";
+							ctx.clearRect(rect.x,rect.y,rect.w,rect.h);
+							ctx.fillStyle=rect.c;
+							rect.y -= rect.v;
+							ctx.fillRect(rect.x,rect.y,rect.w,rect.h);
+						}
+						break;
+					case 40:   //downb
+						if(rect.y + rect.h < h)
+						{
+							console.log(rect.y + rect.h, h);	
+							ctx.fillStyle="black";
+							ctx.clearRect(rect.x,rect.y,rect.w,rect.h);
+							ctx.fillStyle=rect.c;
+							rect.y += rect.v;
+							ctx.fillRect(rect.x,rect.y,rect.w,rect.h);
+						}
+						break;
+					default:
+						console.log("WTF");
+						break;
+				}
+
+			}
+			init();
+			setInterval(drawBall, 30);
+		</script>
+	</body>
+</html>
+
