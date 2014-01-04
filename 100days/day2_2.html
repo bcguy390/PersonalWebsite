@@ -1,0 +1,52 @@
+<html>
+	<head>
+		<title>Day 2</title>
+		<script src = "http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+	</head>
+	<body style = "background:'white'">
+		<canvas id = "canvas"></canvas>
+		<script>
+			
+			var canvas = document.getElementById("canvas");
+			var ctx = canvas.getContext("2d");
+
+			var w = window.innerWidth;
+			var h = window.innerHeight;
+			canvas.width = w;
+			canvas.height = h;
+			var x = 0;
+			var y = f(x);
+			var points = [];
+			for(var i = 0; i < w; i++) {
+				y = f(x);
+				points[x++] = y;
+        	}
+        	ctx.fillStyle = "blue";
+        	ctx.font = "bold 80px Arial";
+        	ctx.fillText("WATER!", w/2 - 200, 100);
+			function f(x)
+			{
+				return 50 * Math.sin(0.05 * x) + 3*h/5;
+			}
+			function draw()
+			{
+				ctx.strokeStyle = "Blue";
+				ctx.fillStyle = "blue";
+				ctx.clearRect(0, 200, w, h);
+	            ctx.beginPath();
+	            points[x++] = y;
+	            y = f(x);
+	            for(var i = 0; i < w; i++) {
+                	ctx.lineTo(i, points[i + x - w]);
+            	}
+	        	ctx.lineTo(i, h);
+            	ctx.lineTo(0, h);
+            	ctx.lineTo(0, points[i + x - w]);
+            	ctx.stroke();
+		        ctx.fill();
+			}
+			setInterval(draw, 1);
+		</script>
+	</body>
+</html>
+
