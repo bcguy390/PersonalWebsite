@@ -1,0 +1,33 @@
+
+<head>
+
+</head>
+
+<p>random number: <span id="rand-val"></span></p>
+<button onclick="refresh();" value="get rand" name="get rand" >refresh</button>
+
+<script type="text/javascript">
+
+/*function reqListener () {
+  console.log(this.responseText);
+  document.getElementById("rand-val").innerHTML=this.responseText;
+}*/
+
+function parseJSON(req, url) {  
+	if (req.status == 200) {  
+    	var jsonResponse = JSON.parse(req.responseText);
+	}
+}
+function refresh () {
+  var oReq = new XMLHttpRequest();
+  var url="http://brianchien.com/example.json"
+  oReq.open('GET', url , true);
+	var target=this;
+  oReq.onload = function() {target.parseJSON(oReq, url)};//reqListener;
+  oReq.send();
+}
+
+
+
+
+</script>
